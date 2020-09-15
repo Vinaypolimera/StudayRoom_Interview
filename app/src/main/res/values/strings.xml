@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">StudayRoom Interview</string>
+    <string name="filter">Filter</string>
+    <string name="enter_tag">Enter Tag</string>
+    <string name="title">Title</string>
+    <string name="tags">#tags</string>
 </resources>
