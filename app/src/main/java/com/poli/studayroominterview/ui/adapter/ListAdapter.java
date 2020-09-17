@@ -1,7 +1,6 @@
 package com.poli.studayroominterview.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +11,22 @@ import com.bumptech.glide.Glide;
 import com.poli.studayroominterview.R;
 import com.poli.studayroominterview.beans.ItemObject;
 
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerViewHolder> {
 
-    ItemObject[] mItemsArray;
+    List<ItemObject> mItemsArray;
     private Context mContext;
 
-    public ListAdapter(Context context, ItemObject[] arrayList) {
+    public ListAdapter(Context context, List<ItemObject> arrayList) {
         mContext = context;
         mItemsArray = arrayList;
     }
 
-    public void updateList(ItemObject[]  itemsArrayList) {
+    public void updateList(List<ItemObject> itemsArrayList) {
         mItemsArray = itemsArrayList;
         notifyDataSetChanged();
     }
@@ -44,11 +44,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ListAdapter.RecyclerViewHolder viewHolder, int position) {
-        ItemObject itemObject = mItemsArray[position];
+        ItemObject itemObject = mItemsArray.get(position);
 
         if(itemObject != null)
         {
-            Glide.with(mContext).load(itemObject.getOwnerProfileImage()).placeholder(R.drawable.ic_user_profile).into(viewHolder.mProfilemage);
+            Glide.with(mContext).load(itemObject.getOwnerProfileImage()).placeholder(R.drawable.ic_user_profile).into(viewHolder.mProfileImage);
             viewHolder.mTitle.setText(itemObject.getTitle());
             viewHolder.mTags.setText(itemObject.getTagstoStrings());
         }
@@ -56,19 +56,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerViewHo
 
     @Override
     public int getItemCount() {
-        return mItemsArray.length;
+        return mItemsArray.size();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView mProfilemage;
+        ImageView mProfileImage;
         TextView mTags;
         TextView mTitle;
 
         public RecyclerViewHolder(View view) {
             super(view);
 
-            mProfilemage = view.findViewById(R.id.profile_image);
+            mProfileImage = view.findViewById(R.id.profile_image);
             mTitle = view.findViewById(R.id.title);
             mTags = view.findViewById(R.id.tags);
         }

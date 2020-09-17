@@ -6,6 +6,8 @@ import com.poli.studayroominterview.beans.BaseObject;
 import com.poli.studayroominterview.beans.ItemObject;
 import com.poli.studayroominterview.retroapi.ApiUtil;
 
+import java.util.List;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import retrofit2.Call;
@@ -16,7 +18,7 @@ import retrofit2.internal.EverythingIsNonNull;
 public class ActivityModel extends ViewModel {
 
     private final String LOG_TAG = ActivityModel.class.getSimpleName();
-    private MutableLiveData<ItemObject[]> mItemObjectArrayLiveData;
+    private MutableLiveData<List<ItemObject>> mItemObjectArrayLiveData;
     private BaseObject mBaseObject;
 
     public ActivityModel(){
@@ -24,7 +26,7 @@ public class ActivityModel extends ViewModel {
         requestServerData();
     }
 
-    public MutableLiveData<ItemObject[]> getItemObjectArrayLiveData() {
+    public MutableLiveData<List<ItemObject>> getItemObjectArrayLiveData() {
         return mItemObjectArrayLiveData;
     }
 

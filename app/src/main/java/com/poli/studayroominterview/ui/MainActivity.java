@@ -1,21 +1,23 @@
 package com.poli.studayroominterview.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.poli.studayroominterview.R;
 import com.poli.studayroominterview.beans.ItemObject;
 import com.poli.studayroominterview.ui.adapter.ListAdapter;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -31,28 +33,33 @@ public class MainActivity extends AppCompatActivity {
 
         mEditText = findViewById(R.id.edit_text);
 
-        mListAdapter = new ListAdapter(this, new ItemObject[0]);
+        mListAdapter = new ListAdapter(this, new ArrayList<ItemObject>());
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(mListAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        mActivityModel.getItemObjectArrayLiveData().observe(this, new Observer<ItemObject[]>() {
+        mActivityModel.getItemObjectArrayLiveData().observe(this, new Observer<List<ItemObject>>() {
             @Override
-            public void onChanged(ItemObject[] itemObjects) {
-                Log.i(LOG_TAG," onChanged ====> "+itemObjects.length);
+            public void onChanged(List<ItemObject> itemObjects) {
+                Log.i(LOG_TAG," onChanged ====> "+itemObjects.size());
                 mListAdapter.updateList(itemObjects);
             }
         });
 
-    }
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-    public void onFilterClicked(View view){
-        Log.i(LOG_TAG," ** onFilterbtnClicked ** ");
-        if(mEditText == null || mActivityModel == null)
-            return;
+            @Override
+            public void onTextChanged(CharSequence text, int i, int i1, int i2) {
+                if(mActivityModel != null)
+                    mActivityModel.updateDataWithTag(text.toString());
+            }
 
-        String tag = Objects.requireNonNull(mEditText.getText()).toString();
-        mActivityModel.updateDataWithTag(tag);
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
     }
 }

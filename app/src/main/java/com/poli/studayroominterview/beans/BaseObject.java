@@ -3,27 +3,25 @@ package com.poli.studayroominterview.beans;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class BaseObject {
     @SerializedName("items")
-    private ItemObject[] mItemObjects;
+    private List<ItemObject> mItemObjects;
 
-    public ItemObject[] getItemObjects() {
+    public List<ItemObject> getItemObjects() {
         return mItemObjects;
     }
 
-    public ItemObject[] getItemObjects(String tag) {
+    public ArrayList<ItemObject> getItemObjects(String tag) {
         ArrayList<ItemObject> itemObjectsList = new ArrayList<>();
 
-        for(int i =0; i< mItemObjects.length; i++)
+        for(ItemObject itemObject : mItemObjects)
         {
-            if(mItemObjects[i].isContainsTag(tag)){
-                itemObjectsList.add(mItemObjects[i++]);
+            if(itemObject.isContainsTag(tag)){
+                itemObjectsList.add(itemObject);
             }
         }
-
-        ItemObject[] itemObjectsArray = new ItemObject[itemObjectsList.size()];
-        return itemObjectsList.toArray(itemObjectsArray);
+        return itemObjectsList;
     }
 }

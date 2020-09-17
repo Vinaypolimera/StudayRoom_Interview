@@ -1,15 +1,13 @@
 package com.poli.studayroominterview.beans;
 
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class ItemObject {
 
     @SerializedName("tags")
-    private String[] tags;
+    private List<String> tags;
 
     @SerializedName("owner")
     private OwnerDetails ownerDetails;
@@ -17,16 +15,16 @@ public class ItemObject {
     @SerializedName("title")
     private String title;
 
-    public String[] getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
     public String getTagstoStrings(){
         String tagString = "";
-        if(tags != null && tags.length > 0){
+        if(tags != null && tags.size() > 0){
             int i = 0;
             for(String tag : tags){
-                tagString += "# "+tags[i++]+"  ";
+                tagString += "# "+tag+"  ";
             }
         }
         return tagString;
@@ -47,12 +45,16 @@ public class ItemObject {
         return imageUrl;
     }
 
-    public boolean isContainsTag(String tag){
+    public boolean isContainsTag(String str){
         boolean isContains = false;
-        if(tags != null && tag.length() > 0 && Arrays.asList(tags).contains(tag))
-            isContains = true;
-
+        if(tags != null && str != null) {
+            for(String tag : tags){
+                if(tag.contains(str)){
+                    isContains = true;
+                    break;
+                }
+            }
+        }
         return isContains;
     }
-
 }
