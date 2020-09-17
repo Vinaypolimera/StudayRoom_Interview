@@ -36,9 +36,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerViewHo
     public ListAdapter.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-
         View view = layoutInflater.inflate(R.layout.list_item, parent, false);
-
         return new RecyclerViewHolder(view);
     }
 
@@ -56,18 +54,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerViewHo
 
     @Override
     public int getItemCount() {
-        return mItemsArray.size();
+        if(mItemsArray != null)
+            return mItemsArray.size();
+        else
+            return 0;
     }
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder
+    {
         ImageView mProfileImage;
         TextView mTags;
         TextView mTitle;
 
         public RecyclerViewHolder(View view) {
             super(view);
-
             mProfileImage = view.findViewById(R.id.profile_image);
             mTitle = view.findViewById(R.id.title);
             mTags = view.findViewById(R.id.tags);
